@@ -1,0 +1,45 @@
+version: "3.4"
+
+services:
+  robot-core:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: prod
+    ports:
+      - "9000"
+      - "9090"
+      - "11311"
+      - "33690"
+    privileged: true
+    environment:
+      - "DISPLAY=unix${DISPLAY}"
+      - "QT_GRAPHICSSYSTEM:native"
+      - "CONTAINER_NAME:ros-kinetic-dev"
+      - "USER:${USER}"
+    devices:
+      - "/dev/dri:/dev/dri"
+    volumes:
+      - ./data/logs/robot_core:/root/.ros/
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    network_mode: "host"
+#   web:
+#     build:
+#       context: ./client
+#       dockerfile: Dockerfile
+#     ports:
+#       - "8080:80"
+#     # env_file: ./server/.env # TODO - uncomment this to auto-load your .env file!
+#     environment:
+#       NODE_ENV: production
+#     depends_on:
+#       - robot-core
+#     networks:
+#       - app-network
+#     volumes:
+#       - /app/node_modules
+# networks:
+#   app-network:
+#     driver: bridge
+# volumes:
+#   - /app/node_modules

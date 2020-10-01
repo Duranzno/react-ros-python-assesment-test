@@ -1,0 +1,7 @@
+<launch>
+    <node pkg="turtlesim" name="turtlebot"  type="turtlesim_node" output="screen"/>
+    <node pkg="turtlesim" name="teleop" type="turtle_teleop_key" output="screen"/>
+    <node pkg="backend"   name="go_to_goal"  type="go_actionserver.py" output="screen"/>
+    <test pkg="backend"   test-name="go_to_goal_integration_test" type="publish_goal_integration_test.py"/>
+    <!-- <test pkg="backend"   test-name="move_integration_test" type="move_integration_test.py"/> -->
+</launch>
